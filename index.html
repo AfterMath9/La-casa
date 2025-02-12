@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Valentine Proposal</title>
 </head>
+
 <body>
     <div class="container">
-        <div>
-            <h1 class="header_text">Lunaaa Would You Be My Valentine?</h1>
-        </div>
+        <h1 class="header_text">Lunaaa, Would You Be My Valentine? 💖</h1>
+
         <div class="gif_container">
-            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtZ2JiZDR0a3lvMWF4OG8yc3p6Ymdvd3g2d245amdveDhyYmx6eCZlcD12MV9pbnRlcm5naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute animated illustration">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtZ2JiZDR0a3lvMWF4OG8yc3p6Ymdvd3g2d245amdveDhyYmx6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute animated illustration">
         </div>
+
         <div class="buttons">
             <button class="btn" id="yesButton" onclick="nextPage()">Yes</button>
             <button class="btn" id="noButton" onmouseover="moveButton()" onclick="moveButton()">No</button>
@@ -19,32 +21,38 @@
     </div>
 
     <script>
-        const TOKEN = "1397301172:AAFUD6RagnkjmdC0xbVudyB4QX8FU1sJjM4";               
-        const CHAT_ID = "280422010";
-        const URI_API = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
-
         function nextPage() {
-            // Send Telegram notification
-            const message = "<b>Valentine</b>\nShe said YES! ❤️";
-            axios.post(URI_API, {
-                chat_id: CHAT_ID,
-                parse_mode: 'html',
-                text: message
+            const API_TOKEN = "au5hqa7knf3r9c9rmxzvwt9i2m67qo"; // Your API Token
+            const USER_KEY = "ukcn88a2fovt97ehv9119rc46yrh9p"; // Your User Key
+
+            // Send notification via Pushover
+            fetch("https://api.pushover.net/1/messages.json", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    token: API_TOKEN,
+                    user: USER_KEY,
+                    message: "She clicked Yes! ❤️",
+                    title: "Valentine Proposal"
+                })
             }).then(() => {
-                // Redirect to yes.html after the message is sent
-                window.location.href = "yes.html";
-            }).catch(error => {
+                window.location.href = "yes.html"; // Redirect after notification
+            }).catch(() => {
                 alert('Failed to send notification, but continuing...');
-                window.location.href = "yes.html"; // Redirect even if message fails
+                window.location.href = "yes.html"; // Redirect even if notification fails
             });
         }
 
         function moveButton() {
-            var x = Math.random() * (window.innerWidth - document.getElementById('noButton').offsetWidth) - 85;
-            var y = Math.random() * (window.innerHeight - document.getElementById('noButton').offsetHeight) - 48;
-            document.getElementById('noButton').style.left = `${x}px`;
-            document.getElementById('noButton').style.top = `${y}px`;
+            var noButton = document.getElementById('noButton');
+            var x = Math.random() * (window.innerWidth - noButton.offsetWidth) - 85;
+            var y = Math.random() * (window.innerHeight - noButton.offsetHeight) - 48;
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
         }
     </script>
 </body>
+
 </html>
